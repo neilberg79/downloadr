@@ -1,0 +1,16 @@
+body{
+	padding:20px;
+}
+
+td{
+padding:5px;
+text-align:left;
+}
+
+input[type=text]{
+	width:300px;
+}
+
+#content{
+	margin-top:20px;
+}

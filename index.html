@@ -1,0 +1,46 @@
+<html>
+<head>
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/bootstrap-theme.css" rel="stylesheet">
+<link href="css/common.css" rel="stylesheet">
+</head>
+<body>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript" src="js/jszip.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+
+<h3>flickr downloadr</h3>
+
+<table>
+	<tr>
+		<td>Set ID:</td><td><input type="text" name="photoset" id="photoset_id" value=""></td>
+	</tr>
+	<tr>
+		<td>Set URL:</td><td><input type="text" name="photoset" id="photoset_URL" value="http://www.flickr.com/photos/neilberg/sets/72157632685166433/"></td>
+	</tr>
+	<tr>
+		<td>Image Size:</td>
+		<td>
+			<select name="size" id="size">				
+				<option value="s">Small</option>
+				<option value="m">Medium</option>
+				<option value="l">Large</option>								
+				<option value="o">Original</option>												
+				<option value="default">Default</option>			
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td>Size Alert</td><td><input type="checkbox" id="sizeAlert" value="1" checked></td>
+	</tr>
+	<tr>
+		<td></td><td><button id="button">Get Images</button> <button id="button_download">Save Images</button></td>
+	</tr>
+</table>
+
+
+<div id="content">
+</div>
+
+</body>
+</html>
