@@ -21,15 +21,15 @@ var downloadr = function(){
 
 			});
 		},
-		findMaxSize: function(curImg,sizeList){										
+		findMaxSize: function(curImg,sizeList){
 				var newImgURL = '';
 				$.each(sizeList.reverse(),function(index,value){
-					newImgUrl = eval("curImg.url"+"_"+value);						
-					if(newImgUrl != undefined){						
+					newImgUrl = eval("curImg.url"+"_"+value);
+					if(newImgUrl != undefined){
 						return false;
 					};
 				});
-				return newImgUrl;				
+				return newImgUrl;
 		},
 		renderImages: function(){
 			var imgURL,html,size,curSize,isSub,showSubWarn;
@@ -38,26 +38,26 @@ var downloadr = function(){
 				imgURL = 'http://farm'+this.farm+'.staticflickr.com/'+this.server+'/'+this.id+'_'+this.secret+'.jpg';
 				if(size == "default"){
 					$( "<img>" ).attr("src",imgURL).appendTo( "#content" );
-				}else{				 			
+				}else{
 					imgURL = eval("this.url"+"_"+size);
 					isSub = false;
 					if(imgURL == undefined){
-				 		sizeList = [];
+						sizeList = [];
 						$('#size option').each(function() {
-	    				sizeList.push($(this).val())
-						});				 	
-				 		imgURL = downloadr.findMaxSize(this,sizeList);					 						 							
-				 		isSub = true;
-				 		showSubWarn = true;
+							sizeList.push($(this).val())
+						});
+						imgURL = downloadr.findMaxSize(this,sizeList);
+						isSub = true;
+						showSubWarn = true;
 					};
-					$("<img>").attr({src:imgURL,sub:isSub}).appendTo("#content");
+					$("<img>").attr({src:imgURL,sub:isSub,style:'display:none'}).appendTo("#content").fadeIn("slow");
 				}
 			});
-		
+
 			if(size != 'max' && showSubWarn && $('#sizeAlert').prop('checked')){
-				$('img[sub="true"]').css('border','2px solid red');	
-				$('#content').prepend("<p>Images with a red border may not be the size you requested due to the size not being available.</p>");									
-			}		
+				$('img[sub="true"]').css('border','2px solid red');
+				$('#content').prepend("<p>Images with a red border may not be the size you requested due to the size not being available.</p>");
+			}
 		},
 		saveImages: function(){
 			var imgURL,fileName,size;
@@ -65,8 +65,8 @@ var downloadr = function(){
 
 			$.each(downloadr.data.photoset.photo,function(){
 				imgURL = eval("this.url"+"_"+size);
-				fileName = imgURL.split('/');				
-				fileName = fileName[fileName.length-1];				
+				fileName = imgURL.split('/');
+				fileName = fileName[fileName.length-1];
 				downloadr.downloadFiles(imgURL,fileName);
 			});
 		},
@@ -115,9 +115,9 @@ $(function(){
 
 	$('#button_download').click(function(){
 		var c;
-		
+
 		c = confirm("Saving images requires a modern browser such as Chrome or Firefox.\n\nSaving will also burst download images to your local download folder.\n\nContinue?");
-		
+
 		if(c){
 			if($('#photoset_id').val()){
 				photoset_id = $('#photoset_id').val();
@@ -125,8 +125,8 @@ $(function(){
 				var idArray = $('#photoset_URL').val().split('/');
 				photoset_id = idArray[idArray.length-2];
 			}
-	
-			if(typeof(photoset_id)!="undefined"){			
+
+			if(typeof(photoset_id)!="undefined"){
 				downloadr.getData(photoset_id,'save');
 			}else{
 				alert('You must specify a set ID or Set URL');

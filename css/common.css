@@ -5,10 +5,19 @@ body{
 td{
 padding:5px;
 text-align:left;
+vertical-align:top;
+}
+
+span.example{
+	font-size:10px;
+	color:#999;
 }
 
 input[type=text]{
 	width:300px;
+	color:#555;
+	font-size:14px;
+	
 }
 
 .logo{
