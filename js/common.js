@@ -24,8 +24,7 @@ var downloadr = function(){
 		findMaxSize: function(curImg,sizeList){										
 				var newImgURL = '';
 				$.each(sizeList.reverse(),function(index,value){
-					newImgUrl = eval("curImg.url"+"_"+value);	
-					console.log(newImgUrl);
+					newImgUrl = eval("curImg.url"+"_"+value);						
 					if(newImgUrl != undefined){						
 						return false;
 					};
@@ -60,22 +59,16 @@ var downloadr = function(){
 				$('#content').prepend("<p>Images with a red border may not be the size you requested due to the size not being available.</p>");									
 			}		
 		},
-		saveImages: function(fileURL,fileName){
-			var imgURL,fileURL,fileName,size;
+		saveImages: function(){
+			var imgURL,fileName,size;
 			size = $("#size option:selected").val();
 
-			if(size == "default"){
-				$.each(downloadr.data.photoset.photo,function(){
-					imgURL = 'http://farm'+this.farm+'.staticflickr.com/'+this.server+'/'+this.id+'_'+this.secret+'.jpg';
-					downloadr.downloadFiles(imgURL,this.title);
-				});
-			}else{				
+			$.each(downloadr.data.photoset.photo,function(){
 				imgURL = eval("this.url"+"_"+size);
-				$.each(downloadr.data.photoset.photo,function(){					
-					downloadr.downloadFiles(imgURL,this.title);
-				});				
-			}
-
+				fileName = imgURL.split('/');				
+				fileName = fileName[fileName.length-1];				
+				downloadr.downloadFiles(imgURL,fileName);
+			});
 		},
 
 		downloadFiles: function(fileURL,fileName){
@@ -121,17 +114,23 @@ $(function(){
 	});
 
 	$('#button_download').click(function(){
-		if($('#photoset_id').val()){
-			photoset_id = $('#photoset_id').val();
-		}else{
-			var idArray = $('#photoset_URL').val().split('/');
-			photoset_id = idArray[idArray.length-2];
-		}
-
-		if(typeof(photoset_id)!="undefined"){			
-			downloadr.getData(photoset_id,'save');
-		}else{
-			alert('You must specify a set ID or Set URL');
+		var c;
+		
+		c = confirm("Saving images requires a modern browser such as Chrome or Firefox.\n\nSaving will also burst download images to your local download folder.\n\nContinue?");
+		
+		if(c){
+			if($('#photoset_id').val()){
+				photoset_id = $('#photoset_id').val();
+			}else{
+				var idArray = $('#photoset_URL').val().split('/');
+				photoset_id = idArray[idArray.length-2];
+			}
+	
+			if(typeof(photoset_id)!="undefined"){			
+				downloadr.getData(photoset_id,'save');
+			}else{
+				alert('You must specify a set ID or Set URL');
+			}
 		}
 	});
 

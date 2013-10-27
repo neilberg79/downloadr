@@ -11,6 +11,14 @@ input[type=text]{
 	width:300px;
 }
 
+.logo{
+	margin-right:10px;
+}
+
 #content{
 	margin-top:20px;
+}
+
+h3{
+	margin-top:0;
 }
