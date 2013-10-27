@@ -55,9 +55,9 @@ var downloadr = function(){
 				}));
 			});
 
-			if(size != 'max' && showSubWarn && $('#sizeAlert').prop('checked')){
+			if(size != 'max' && showSubWarn){
 				$('img[data-sub="true"]').css('border','2px solid red');
-				$('#content').prepend("<p>Images with a red border may not be the size you requested due to the size not being available.</p>");
+				$('#content').prepend("<p>Images with a red border were not available in the size you requested.  The closest size was provided.</p>");
 			}
 		},
 		saveImages: function(){
