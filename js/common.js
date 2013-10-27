@@ -8,7 +8,7 @@ var downloadr = function(){
 				api_key:'801db5f6223c6b1124e2b45874ec8214',
 				photoset_id:photoset_id,
 				method:'flickr.photosets.getPhotos',
-				extras: 'url_s,url_m,url_l,url_o',
+				extras: 'path_alias,url_s,url_m,url_l,url_o',
 			per_page:1000})
 			.done(function(data){
 				downloadr.data = data;
@@ -35,27 +35,28 @@ var downloadr = function(){
 			var imgURL,html,size,curSize,isSub,showSubWarn;
 			size = $("#size option:selected").val();
 			$.each(downloadr.data.photoset.photo,function(){
-				imgURL = 'http://farm'+this.farm+'.staticflickr.com/'+this.server+'/'+this.id+'_'+this.secret+'.jpg';
-				if(size == "default"){
-					$( "<img>" ).attr("src",imgURL).appendTo( "#content" );
-				}else{
-					imgURL = eval("this.url"+"_"+size);
-					isSub = false;
-					if(imgURL == undefined){
-						sizeList = [];
-						$('#size option').each(function() {
-							sizeList.push($(this).val())
-						});
-						imgURL = downloadr.findMaxSize(this,sizeList);
-						isSub = true;
-						showSubWarn = true;
-					};
-					$("<img>").attr({src:imgURL,sub:isSub,style:'display:none'}).appendTo("#content").fadeIn("slow");
-				}
+				imgURL = eval("this.url"+"_"+size);
+				isSub = false;
+				if(imgURL == undefined){
+					sizeList = [];
+					$('#size option').each(function() {
+						sizeList.push($(this).val())
+					});
+					imgURL = downloadr.findMaxSize(this,sizeList);
+					isSub = true;
+					showSubWarn = true;
+				};
+								
+				$("#content").append($("<a>", 
+				{
+				    href: 'http://www.flickr.com/photos/'+this.pathalias+'/'+this.id, 
+				    html: $("<img>", {src:imgURL,'data-sub':isSub,style:'display:none'}).fadeIn("slow"),
+				    target:'_new'
+				}));
 			});
 
 			if(size != 'max' && showSubWarn && $('#sizeAlert').prop('checked')){
-				$('img[sub="true"]').css('border','2px solid red');
+				$('img[data-sub="true"]').css('border','2px solid red');
 				$('#content').prepend("<p>Images with a red border may not be the size you requested due to the size not being available.</p>");
 			}
 		},
