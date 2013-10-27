@@ -20,6 +20,16 @@ input[type=text]{
 	
 }
 
+#preview{
+	cursor:pointer;
+	text-decoration:underline;
+	color:#008000;
+}
+
+.greeting{
+	padding:0 0 20px 0;
+}
+
 .logo{
 	margin-right:10px;
 }

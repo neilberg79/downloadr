@@ -73,6 +73,7 @@ var downloadr = function(){
 
 		downloadFiles: function(fileURL,fileName){
 				if (!window.ActiveXObject) {
+					console.log(1);
 					var save = document.createElement('a');
 					save.href = fileURL;
 					save.target = '_blank';
@@ -86,6 +87,7 @@ var downloadr = function(){
 
 				// for IE
 				else if ( !! window.ActiveXObject && document.execCommand)     {
+						console.log(2);
 						var _window = window.open(fileURL, '_blank');
 						_window.document.close();
 						_window.document.execCommand('SaveAs', true, fileName || fileURL)
@@ -97,7 +99,8 @@ var downloadr = function(){
 }();
 
 $(function(){
-	$('#button').click(function(){
+	$('#button_get').click(function(){
+		var photoset_id;
 		$('#content').html('');
 		if($('#photoset_id').val()){
 			photoset_id = $('#photoset_id').val();
@@ -113,10 +116,15 @@ $(function(){
 		}
 	});
 
+	var is_chrome = window.chrome;	
+	if(!is_chrome){
+		$('#button_download').attr({"disabled":"disabled",title:"Currently only working in Chrome"});		
+	}
+	
 	$('#button_download').click(function(){
-		var c;
+		var c,photoset_id;
 
-		c = confirm("Saving images requires a modern browser such as Chrome or Firefox.\n\nSaving will also burst download images to your local download folder.\n\nContinue?");
+		c = confirm("Saving images will burst download images to your local download folder.\n\nContinue?");
 
 		if(c){
 			if($('#photoset_id').val()){
@@ -133,6 +141,10 @@ $(function(){
 			}
 		}
 	});
-
-
+	
+	
+	$('#preview').click(function(){
+		$('#photoset_id').val('72157631324774046');
+		$('#button_get').click();
+	});
 });
