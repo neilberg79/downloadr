@@ -12,13 +12,18 @@ var downloadr = function(){
 			per_page:1000})
 			.done(function(data){
 				downloadr.data = data;
-
+				
 				if(action == 'save'){
 					downloadr.saveImages();
 				}else if(action == 'render'){
 					downloadr.renderImages();
 				}
-
+				
+				$('#content').prepend($("<div>", 
+				{				    
+				    html: "<b>Set Name:</b> "+downloadr.data.photoset.title+" - "+downloadr.data.photoset.total+" image(s) total",				    
+				}));				
+				
 			});
 		},
 		findMaxSize: function(curImg,sizeList){
